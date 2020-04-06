@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+    <header class="text-center bg-primary">
+        <hi class="display-4 text-white font-weight-bold">Weather Dashboard</hi>
+    </header>
+    <div class="container">
+        <div class="row mt-2 ">
+            <div class="col-sm-4 card float-left">
+                <div class="card-header">
+                    <h6>Search for a City:</h6>
+                    <div class="">
+                        <label for="inputCityName" class="sr-only">City</label>
+                        <input style="width: 14rem" class="form-control float-left" id="inputCityName"
+                            placeholder="City Name">
+                        <button id="searchbutton" type="submit" class="btn btn-primary mb-2 ">Search</button>
+                    </div>
+                </div>
+                <div class="list-city mt-2">
+                    <ul id="citySearchList" class="list-group list-group-flush border mb-2"></ul>
+                    <button id="clearButton" class="btn btn-primary mb-2 float-right">Clear Search</button>
+                </div>
+
+            </div>
+            <div class="col-sm-8 border">
+                <div class="row card">
+                    <div class="card-body mainDisplay">
+                        <div id="cityNameDisplay" class="card-header mb-2">
+                        </div>
+                        <p id="temperature"></p>
+                        <p id="humidity"></p>
+                        <p id="windSpeed"></p>
+                        <p id="uvIndex"></p>
+                    </div>
+                </div>
+                <div class="row card mb-4">
+                    <div class="col">
+                        <div id="forecastDisplayHeader" class="card-header mb-3">
+                            5-Day Forecast</div>
+                        <div class="row card-body forecastDisplayBox">
+                            
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <footer class="footer fixed-bottom mt-auto py-2 text-center bg-primary">
+        <div class="container">
+            <span class="text-white">© Mich.Ch</span>
+        </div>
+    </footer>
+    <script src="./main.js"></script>
+</body>
+
+</html>

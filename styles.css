@@ -1,0 +1,31 @@
+.mainDisplay{
+    background-color: rgb(247, 247, 211);
+    color: darkslategrey;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 15px;
+}
+#cityNameDisplay{
+    color: lightseagreen;
+    background-color:black;
+    font-size: 25px;
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#forecastDisplayHeader{
+    background-color: rgb(163, 227, 248);
+    text-align: center;
+    font-family: monospace;
+    font-weight: bold;
+    color: black;
+    font-size: 20px;
+   
+}
+#forecastDisplayBox{
+    color: teal;
+    font-size: 7px;
+    
+    
+}
+li{
+    list-style-type: none;
+}

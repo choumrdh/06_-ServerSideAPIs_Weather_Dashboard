@@ -1,67 +1,29 @@
 $(document).ready(function () {
-
     
     var currentDayNow;
     setInterval(() => {
         currentDayNow = moment().format("MMMM Do YYYY");
     }, 1000)
 
-    function resetData() {
-        $("#citySearchItemList").empty();
-        $(".mainDisplay").empty();
-        $(".forecastDisplayBox").empty();
-        for (var i = 0; i < 6; i++) {
-            $(".forcastDay-" + i).empty();
-        }
-    }
-
     function mainDisplay() {
-        var apiKey = "fe42b2c146dd1a39d1def1f468f5c416";
+        const apiKey = "fe42b2c146dd1a39d1def1f468f5c416";
         var cityNameInput = $("#inputCityName").val().trim().toLowerCase();
-        let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityNameInput + "&units=imperial&appid=" + apiKey;
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityNameInput + "&units=imperial&appid=" + apiKey;
         $.ajax({
             url: queryURL,
             method: "GET",
         }).then(function (response) {
             console.log(response);
-            let mainNameDisplay = response.name;
-            let mainNameDisplayCountry = response.sys.country
-            let temp = response.main.temp;
-            let humidity = response.main.humidity;
-            let windSpeed = response.wind.speed
+            var mainNameDisplay = response.name;
+            var mainNameDisplayCountry = response.sys.country
+            var temp = response.main.temp;
+            var humidity = response.main.humidity;
+            var windSpeed = response.wind.speed
 
-            let longitude = response.coord.lat;;
-            let latitude = response.coord.lon
-            let getIcon = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png"
+            var longitude = response.coord.lat;;
+            var latitude = response.coord.lon
+            var getIcon = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png"
             let icon = $("<img>").attr("src", getIcon);
-
-            let forcastqueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityNameInput + "&units=imperial&appid=" + apiKey
-            $.ajax({
-                url: forcastqueryURL,
-                method: "GET",
-            }).then(function (forecastresponse) {
-                console.log(forecastresponse);
-
-                for (var i = 0; i < forecastresponse.list.length; i++) {
-                    var response = forecastresponse.list[i];
-                    var forecast = new Date(response.dt_txt);
-                    
-                    if (forecast.getHours()=== 12){
-                        let forecastDay = $("<div>").text(response.dt_txt);  
-                        let getForecastIcon = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png"
-                    let forecastIcon = $("<img>").attr("src", getForecastIcon);
-
-                    let forceastDayTemp = $("<div>").text("Temp(F): " + response.main.temp);
-
-                    let forecaseDayHumidity = $("<div>").text("Humidity: " + response.main.humidity + "%");
-                    
-                    $(".forecastDisplayBox").append($("<div>").addClass(" col-2 col-md-2 col-lg-2 border border-primary m-2").append(forecastDay, forecastIcon, forceastDayTemp, forecaseDayHumidity))
-                    }
-                    
-                }
-                
-                
-            });
 
             //main Display box
             $("#cityNameDisplay").text("Name: " + mainNameDisplay + " , " + mainNameDisplayCountry + ". " + currentDayNow).append(icon);
@@ -85,37 +47,92 @@ $(document).ready(function () {
                 }
             });
 
-
+            foreCastData();
 
         })
+        //5day forecast display
+        function foreCastData() {
+            var forcastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityNameInput + "&units=imperial&appid=" + apiKey
+            $.ajax({
+                url: forcastQueryURL,
+                method: "GET",
+            }).then(function (forecastResponse) {
+                console.log(forecastResponse);
+
+                for (var i = 0; i < forecastResponse.list.length; i++) {
+                    var response = forecastResponse.list[i];
+                    var forecast = new Date(response.dt_txt);
+
+                    if (forecast.getHours() === 12) {
+                        var forecastDay = $("<div>").text(response.dt_txt);
+                        var getForecastIcon = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png"
+                        var forecastIcon = $("<img>").attr("src", getForecastIcon);
+
+                        var forceastDayTemp = $("<div>").text("Temp(F): " + response.main.temp);
+
+                        var forecaseDayHumidity = $("<div>").text("Humidity: " + response.main.humidity + "%");
+
+                        $(".forecastDisplayBox").append($("<div>").addClass(" col-2 col-md-2 col-lg-2 border border-primary m-2").append(forecastDay, forecastIcon, forceastDayTemp, forecaseDayHumidity))
+                    }
+                }
+            });
+        }
+
     }
+    var citySearchHistory = [];
+    function storeCities() {
+        
+
+        var cityNameInput = $("#inputCityName").val().trim().toLowerCase();
+        var citySearchbutton = $("<button>");
+        citySearchbutton.attr("data-name", cityNameInput);
+        citySearchbutton.addClass("btn btn-info m-1")
+        citySearchbutton.text(cityNameInput);
+        $("#citySearchList").prepend(citySearchbutton);
+        var cityName = cityNameInput
+
+        if (citySearchHistory > 5) {
+            citySearchHistory.shift()
+        } else {
+            citySearchHistory.push(cityName.toString())
+        }
+        console.log(citySearchHistory);
+
+        localStorage.setItem("citySearchHistory", JSON.stringify(citySearchHistory))
+
+
+    }
+    getCityHistory();
 
     $("#searchbutton").on("click", function () {
         $(".forecastDisplayBox").html("");
-        var cityNameInput = $("#inputCityName").val().trim().toLowerCase();
+        let cityNameInput = $("#inputCityName").val().trim().toLowerCase();
         if (cityNameInput == "") {
+            alert("Field cannot be empty")
             return;
         } else {
             mainDisplay();
         }
-        var citiesSearchList = [];
-        let citySearchItemLi = $("<li>");
-        citySearchItemLi.attr("data-name");
-        citySearchItemLi.addClass("list-group-item")
-        citySearchItemLi.text($("#inputCityName").val().trim().toLowerCase());
-        $("#citySearchList").prepend(citySearchItemLi);
-
-        if ()
-        citiesSearchList.push(cityNameInput.toString())
-        
-        localStorage.setItem("cityNameInput", JSON.stringify(citySearchList))
-
+        storeCities()
 
     })
 
+    function getCityHistory() {
+        var history = JSON.parse(localStorage.getItem(citySearchHistory))
+        if (history == null || history == "") {
+            console.log("NOTHING HERE")
+            return;
+        }
+        console.log(history)
+    }
+
+
+
     $("#clearButton").on("click", function () {
-        resetData();
-        $("#citySearchItemList").empty();
+        $(".forecastDisplayBox").html("");
+        $(".mainDisplay").html("");
+        $("#citySearchList").empty();
+
         // localStorage.clear();
     })
 });

@@ -1,12 +1,17 @@
+body{
+    background-image: url("https://www.hdwallpapers.in/walls/sky_colors-wide.jpg");
+    background-position: 100%;
+    background-size: 100% ;
+}
 .mainDisplay{
-    background-color: rgb(247, 247, 211);
-    color: darkslategrey;
+    background-color: rgb(198, 195, 252);
+    color: rgb(53, 69, 155);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 15px;
+    font-size: 18px;
 }
 #cityNameDisplay{
     color: lightseagreen;
-    font-size: 25px;
+    font-size: 30px;
     font-style: italic;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
@@ -14,6 +19,7 @@
     background-color: rgb(163, 227, 248);
     text-align: center;
     font-family: monospace;
+    text-shadow: black;
     font-weight: bold;
     color: black;
     font-size: 20px;
@@ -23,8 +29,4 @@
     color: teal;
     font-size: 12px;
     
-    
-}
-li{
-    list-style-type: none;
 }

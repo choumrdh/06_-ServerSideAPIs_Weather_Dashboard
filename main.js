@@ -91,7 +91,6 @@ $(document).ready(function () {
     }
     function storeCities() {
         var cityName = $("#inputCityName").val().trim().toLowerCase();
-
         citySearchHistory.push(cityName.toString())
         citySearchHistory = citySearchHistory.slice(-5);
         console.log(citySearchHistory);
@@ -113,6 +112,7 @@ $(document).ready(function () {
     }
     $("#searchbutton").on("click", function () {
         $(".forecastDisplayBox").html("");
+
         var cityNameInput = $("#inputCityName").val().trim().toLowerCase();
         if (cityNameInput == "") {
             alert("Field cannot be empty")
@@ -135,6 +135,9 @@ $(document).ready(function () {
 
     })
     $("#clearButton").on("click", function () {
+        $(".mainDisplay").hide();
+        $("#forecastDisplayHeader").hide();
+        $(".forecastDisplayBox").hide();
         $("#citySearchList").empty();
         localStorage.clear();
     })

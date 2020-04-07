@@ -6,10 +6,10 @@
 ## Features
 - Users can enter city name in search bar and see current weather conditions
 - User is able to see the current weather condition such as :   
-* Temperature
-* Humidity
-* Wind Speed
-* UV Index
+..* Temperature
+..* Humidity
+..* Wind Speed
+..* UV Index
 - Users can enter city name in search bar and see a 5-day forecast
 
 

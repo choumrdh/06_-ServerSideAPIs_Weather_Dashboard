@@ -16,7 +16,7 @@ $(document).ready(function () {
     setInterval(() => {
         currentDayNow = moment().format("MMMM Do YYYY");
     }, 1000)
-
+     
     function mainDisplay(cityNameInput) {
 
         // var cityNameInput = $("#inputCityName").val().trim().toLowerCase();
@@ -44,7 +44,7 @@ $(document).ready(function () {
             $("#windSpeed").text("Wind Speend: " + windSpeed + " MPH");
 
             //uv index portion
-            let uvqueryURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + longitude + "&lon=" + latitude
+            let uvqueryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + longitude + "&lon=" + latitude
             $.ajax({
                 url: uvqueryURL,
                 method: "GET"

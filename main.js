@@ -16,16 +16,18 @@ $(document).ready(function () {
     setInterval(() => {
         currentDayNow = moment().format("MMMM Do YYYY");
     }, 1000)
-     
-    function mainDisplay(cityNameInput) {
-
-        // var cityNameInput = $("#inputCityName").val().trim().toLowerCase();
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityNameInput + "&units=imperial&appid=" + apiKey;
+    
+     function openWeatherMapCall(cityNameInput){
+         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityNameInput + "&units=imperial&appid=" + apiKey;
         $.ajax({
             url: queryURL,
             method: "GET",
         }).then(function (response) {
-            console.log(response);
+            console.log(response); 
+            mainDisplay(response);
+        })
+     }
+    function mainDisplay(response) {
             var mainNameDisplay = response.name;
             var mainNameDisplayCountry = response.sys.country
             var temp = response.main.temp;
@@ -42,9 +44,10 @@ $(document).ready(function () {
             $("#temperature").text("Temperature(F): " + temp);
             $("#humidity").text("Humidity: " + humidity + " %");
             $("#windSpeed").text("Wind Speend: " + windSpeed + " MPH");
-
-            //uv index portion
-            let uvqueryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + longitude + "&lon=" + latitude
+            uvIndexRender(latitude,longitude)     
+    }
+    function uvIndexRender(latitude,longitude){
+        let uvqueryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + longitude + "&lon=" + latitude
             $.ajax({
                 url: uvqueryURL,
                 method: "GET"
@@ -59,11 +62,8 @@ $(document).ready(function () {
                 }
             });
 
-        })
     }
-    //5day forecast display
     function forecastData(cityNameInput) {
-        // var cityNameInput = $("#inputCityName").val().trim().toLowerCase();
         var forcastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityNameInput + "&units=imperial&appid=" + apiKey
         $.ajax({
             url: forcastQueryURL,
@@ -105,7 +105,7 @@ $(document).ready(function () {
         citySearchbutton.text(cityNameInput);
         citySearchbutton.on("click", function () {
             $(".forecastDisplayBox").html("");
-            mainDisplay(cityNameInput);
+            openWeatherMapCall(cityNameInput);
             forecastData(cityNameInput);
         })
         $("#citySearchList").prepend(citySearchbutton);
@@ -118,12 +118,10 @@ $(document).ready(function () {
             alert("Field cannot be empty")
             return;
         } else {
-            mainDisplay(cityNameInput);
+            openWeatherMapCall(cityNameInput);
             forecastData(cityNameInput);
         }
         storeCities();
-        console.log(citySearchHistory.length)
-        console.log(citySearchHistory)
         if ( citySearchHistory.length < 5){
             generateCityBtn(cityNameInput);
         }
